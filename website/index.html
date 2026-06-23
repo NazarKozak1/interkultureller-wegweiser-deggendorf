@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interkultureller Wegweiser Deggendorf</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="popup-styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Interkultureller Wegweiser Deggendorf</h1>
+    </header>
+
+    <main id="main-content">
+
+        <div id="filter-panel">
+            <h3>Kategorien</h3>
+            <div class="filter-grid">
+                <label class="filter-label">
+                    <input type="checkbox" class="category-filter" value="Behörden" checked>
+                    <span class="filter-tag">🏛️ Behörden</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" class="category-filter" value="Schulen und Hochschulen">
+                    <span class="filter-tag">🎓 Schulen & Hochschulen</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" class="category-filter" value="Integrationskurse Deggendorf">
+                    <span class="filter-tag">🗣️ Integrationskurse</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" class="category-filter" value="Gesundheit">
+                    <span class="filter-tag">🏥 Gesundheit</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" class="category-filter" value="Soziales">
+                    <span class="filter-tag">🤝 Soziales</span>
+                </label>
+                <label class="filter-label">
+                    <input type="checkbox" class="category-filter" value="Vereine und Gemeinschaft">
+                    <span class="filter-tag">🌍 Vereine & Gemeinschaft</span>
+                </label>
+            </div>
+        </div>
+
+        <div id="map"></div>
+    </main>
+
+    <footer>
+        <span>© 2025 Interkultureller Wegweiser Deggendorf</span>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script src="script.js"></script>
+</body>
+</html>

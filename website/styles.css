@@ -1,0 +1,155 @@
+/* Базові налаштування */
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Шапка */
+header {
+    background-color: #ffffff;
+    color: #1a252f;
+    padding: 20px 40px;
+    border-bottom: 1px solid #eaeaea;
+    z-index: 1000;
+    flex-shrink: 0;
+}
+
+.header-brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.header-icon {
+    font-size: 1.8rem;
+    line-height: 1;
+}
+
+.header-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+}
+
+.header-subtitle {
+    margin: 0;
+    font-size: 0.8rem;
+    color: #8a9bb0;
+    font-weight: 400;
+}
+
+/* Головний контейнер */
+#main-content {
+    flex-grow: 1;
+    position: relative;
+    display: flex;
+    overflow: hidden;
+}
+
+/* Карта */
+#map {
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: #e5e3df;
+}
+
+/* Панель фільтрів */
+#filter-panel {
+    position: absolute;
+    top: 24px;
+    left: 24px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+    z-index: 1000;
+    width: auto;
+}
+
+#filter-panel h3 {
+    margin-top: 0;
+    margin-bottom: 16px;
+    font-size: 1rem;
+    color: #1a252f;
+    font-weight: 700;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 10px;
+    grid-column: 1 / -1; /* заголовок на всю ширину */
+}
+
+.filter-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.filter-label {
+    display: block;
+    margin-bottom: 8px;
+    cursor: pointer;
+}
+
+/* Ховаємо стандартний чекбокс */
+.filter-label input[type="checkbox"] {
+    display: none;
+}
+
+/* Кнопка категорії — вимкнений стан */
+.filter-tag {
+    display: block;
+    padding: 9px 14px;
+    background-color: #f4f6f8;
+    color: #637381;
+    border-radius: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    user-select: none;
+}
+
+/* Активний стан */
+.filter-label input[type="checkbox"]:checked + .filter-tag {
+    background-color: #1565c0;
+    color: #ffffff;
+    border-color: #1565c0;
+}
+
+/* Hover */
+.filter-label:hover .filter-tag {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Футер — фіксований знизу */
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.65);
+    height: 30px;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+footer span {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.72rem;
+}
