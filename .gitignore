@@ -1,0 +1,8 @@
+.venv/
+logs/
+.idea/
+__pycache__/
+
+.env
+.gitattributes
+*.pyc

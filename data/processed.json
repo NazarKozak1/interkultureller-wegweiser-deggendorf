@@ -1,0 +1,342 @@
+{
+  "Behörden": [
+    {
+      "Name": "Rathaus Deggendorf (Bürgeramt / Einwohnermeldeamt)",
+      "Adresse": "Franz-Josef-Strauß-Str. 3",
+      "Telefonnummer": "0991 29600",
+      "E-Mail-Adresse": "poststelle@deggendorf.de",
+      "Website": "https://www.deggendorf.de/",
+      "Beschreibung": "Hier können Sie nach Ihrem Einzug Ihren Wohnsitz offiziell anmelden, eine Meldebescheinigung erhalten sowie wichtige lokale Anträge stellen und nützliche Links auf ihrer Website finden.",
+      "Montag": "07:30-12:00;13:00-16:00",
+      "Dienstag": "08:00-16:00",
+      "Mittwoch": "08:00-12:00",
+      "Donnerstag": "08:00-16:00",
+      "Freitag": "08:00-12:00",
+      "Stand": "16.06.2026",
+      "lat": 48.8378038,
+      "lon": 12.963645
+    },
+    {
+      "Name": "Polizei",
+      "Adresse": "Hans-Krämer-Str. 65",
+      "Telefonnummer": "0991 38960",
+      "E-Mail-Adresse": null,
+      "Website": "https://www.polizei.bayern.de/wir-ueber-uns/organisation/dienststellen/0900213020000.html",
+      "Beschreibung": "Hier können Sie im Notfall oder bei Straftaten Hilfe und Schutz anfordern, Anzeige erstatten sowie wichtige Beratung zur Sicherheit und nützliche Links auf ihrer Website finden.",
+      "Montag": null,
+      "Dienstag": null,
+      "Mittwoch": null,
+      "Donnerstag": null,
+      "Freitag": null,
+      "Stand": "16.06.2026",
+      "lat": 48.8288672,
+      "lon": 12.9617795
+    },
+    {
+      "Name": "Landratsamt Deggendorf / Ausländeramt",
+      "Adresse": "Herrenstraße 18",
+      "Telefonnummer": "0991 31000",
+      "E-Mail-Adresse": "poststelle@lra-deg.bayern.de",
+      "Website": "https://www.landkreis-deggendorf.de/",
+      "Beschreibung": "Hier können Sie Ihre Aufenthaltstitel beantragen oder verlängern, Arbeitserlaubnisse regeln sowie behördliche Fragen zu Ihrem Aufenthaltsstatus klären und nützliche Links auf ihrer Website finden.",
+      "Montag": "07:30-12:30",
+      "Dienstag": "07:30-12:30;13:30-16:00",
+      "Mittwoch": "07:30-12:30",
+      "Donnerstag": "07:30-17:00",
+      "Freitag": "07:30-12:00",
+      "Stand": "16.06.2026",
+      "lat": 48.8390813,
+      "lon": 12.9543235
+    },
+    {
+      "Name": "Jobcenter Deggendorf",
+      "Adresse": "Hindenburgstraße 32",
+      "Telefonnummer": "0991 3101750",
+      "E-Mail-Adresse": "Bayern@arbeitsagentur.de",
+      "Website": "https://www.arbeitsagentur.de/vor-ort/jobcenter/jobcenter-landkreis-deggendorf-deggendorf.html",
+      "Beschreibung": "Hier können Sie finanzielle Unterstützung (Bürgergeld) beantragen, Hilfe bei der Stellensuche und Anerkennung von Abschlüssen erhalten sowie nützliche Formulare und Links auf ihrer Website finden.",
+      "Montag": "08:00-12:00",
+      "Dienstag": "08:00-12:00",
+      "Mittwoch": "08:00-12:00",
+      "Donnerstag": "08:00-12:00",
+      "Freitag": "08:00-12:00",
+      "Stand": "16.06.2026",
+      "lat": 48.8371058,
+      "lon": 12.9592967
+    },
+    {
+      "Name": "Sozialamt Deggendorf",
+      "Adresse": "Herrenstraße 18",
+      "Telefonnummer": "0991 31000",
+      "E-Mail-Adresse": "Sozialwesen@lra-deg.bayern.de",
+      "Website": "https://www.landkreis-deggendorf.de/leben-arbeiten/soziales-senioren/sozialamt/",
+      "Beschreibung": "Hier können Sie als Migrant finanzielle Hilfe bei geringem Einkommen (z. B. Grundsicherung oder Leistungen für Asylbewerber) beantragen sowie nützliche Formulare und Links auf ihrer Website finden.",
+      "Montag": "07:30-12:30",
+      "Dienstag": "07:30-12:30;13:30-16:00",
+      "Mittwoch": "07:30-12:30",
+      "Donnerstag": "07:30-17:00",
+      "Freitag": "07:30-12:00",
+      "Stand": "17.06.2026",
+      "lat": 48.8390813,
+      "lon": 12.9543235
+    },
+    {
+      "Name": "Amt für Jugend und Familie",
+      "Adresse": "Herrenstraße 18",
+      "Telefonnummer": "0991 3100355",
+      "E-Mail-Adresse": "Kreisjugendamt@lra-deg.bayern.de",
+      "Website": "https://www.landkreis-deggendorf.de/leben-arbeiten/familie-kinder-jugendliche/amt-fuer-familie-kinder-jugendliche/",
+      "Beschreibung": "Hier können Sie Unterstützung bei der Kinderbetreuung, Beratung zu Erziehungsfragen sowie Hilfe für Familien und Jugendliche erhalten und nützliche Infomaterialien und Links auf ihrer Website finden.",
+      "Montag": "07:30-12:30",
+      "Dienstag": "07:30-12:30;13:30-16:00",
+      "Mittwoch": "07:30-12:30",
+      "Donnerstag": "07:30-17:00",
+      "Freitag": "07:30-12:00",
+      "Stand": "17.06.2026",
+      "lat": 48.8390813,
+      "lon": 12.9543235
+    },
+    {
+      "Name": "Schulamt",
+      "Adresse": "Pater-Fink-Str. 8",
+      "Telefonnummer": "0991 3100-140",
+      "E-Mail-Adresse": "schulamt@lra-deg.bayern.de",
+      "Website": "https://www.schulamt-deggendorf.de/aktuelles-termine/",
+      "Beschreibung": "Hier können Sie Fragen zur Schulpflicht klären, Unterstützung bei der Anmeldung und Zuweisung zu einer Schule für Ihre Kinder erhalten sowie wichtige Informationen zum Schulsystem und nützliche Links auf ihrer Website finden.",
+      "Montag": "08:00-12:00;13:00-16:00",
+      "Dienstag": "08:00-12:00;13:00-16:00",
+      "Mittwoch": "08:00-12:00;13:00-16:00",
+      "Donnerstag": "08:00-12:00;13:00-16:00",
+      "Freitag": "08:00-12:00",
+      "Stand": "20.06.2026",
+      "lat": 48.8456305,
+      "lon": 12.9719992
+    }
+  ],
+  "Schulen und Hochschulen": [
+    {
+      "Name": "Grundschule An der Angermühle",
+      "Adresse": "Westlicher Stadtgraben 18",
+      "Deutschklasse": false,
+      "Telefonnummer": "0991 340080",
+      "E-Mail-Adresse": "verwaltung@gs-angermuehle.de",
+      "Website": "https://www.grundschule-angermuehle.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8355431,
+      "lon": 12.9598021
+    },
+    {
+      "Name": "Grundschule St. Martin",
+      "Adresse": "Berger Str. 29",
+      "Deutschklasse": false,
+      "Telefonnummer": "0991 299199",
+      "E-Mail-Adresse": "verwaltung@grundschule-sankt-martin.de",
+      "Website": "https://www.gs-sankt-martin-deg.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8424334,
+      "lon": 12.9557889
+    },
+    {
+      "Name": "Grundschule Theodor Eckert Deggendorf",
+      "Adresse": "Pandurenweg 15",
+      "Deutschklasse": false,
+      "Telefonnummer": "0991 29607200",
+      "E-Mail-Adresse": "sekretariat@gs-th-eckert.de",
+      "Website": "https://www.gs-th-eckert.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8303861,
+      "lon": 12.9666073
+    },
+    {
+      "Name": "Mittelschule St. Martin",
+      "Adresse": "Berger Str. 29",
+      "Deutschklasse": true,
+      "Telefonnummer": "0991 29607100",
+      "E-Mail-Adresse": "verwaltung@ms-st-martin.de",
+      "Website": "https://www.ms-st-martin.org/",
+      "Stand": "20.06.2026",
+      "lat": 48.8424334,
+      "lon": 12.9557889
+    },
+    {
+      "Name": "Mittelschule Theodor Heuss",
+      "Adresse": "Pandurenweg 9",
+      "Deutschklasse": false,
+      "Telefonnummer": "0991 29607000",
+      "E-Mail-Adresse": "verwaltung@ms-theodor-heuss.de",
+      "Website": "https://www.mittelschule-theodor-heuss.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8305375,
+      "lon": 12.9653238
+    },
+    {
+      "Name": "Hochschule THD",
+      "Adresse": "Dieter-Görlitz-Platz 1",
+      "Deutschklasse": false,
+      "Telefonnummer": "0991 36150",
+      "E-Mail-Adresse": "info@th-deg.de",
+      "Website": "https://www.th-deg.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8295544,
+      "lon": 12.954735
+    }
+  ],
+  "Integrationskurse Deggendorf": [
+    {
+      "Name": "Volkshochschule Deggendorf ",
+      "Adresse": "Amanstr. 11",
+      "Telefonnummer": "0991-320 150",
+      "E-Mail-Adresse": "info@vhs-deggendorf.de",
+      "Website": "https://www.vhs-deggendorf.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8371101,
+      "lon": 12.962494
+    },
+    {
+      "Name": "Bildungszentrum ISA",
+      "Adresse": "Graflinger Str. 29",
+      "Telefonnummer": "0991-38313106",
+      "E-Mail-Adresse": "info@isa-bildung.de",
+      "Website": "http://isa-bildung.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8391497,
+      "lon": 12.9600677
+    },
+    {
+      "Name": "IFP Schulungszentrum",
+      "Adresse": "Hindenburgstr. 33",
+      "Telefonnummer": "0991 3619310",
+      "E-Mail-Adresse": "deggendorf@ifp-fortbildung.de",
+      "Website": "https://www.ifpfortbildung.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8380047,
+      "lon": 12.9576201
+    },
+    {
+      "Name": "DEB Deggendorf (Deutsches Erwachsenen-Bildungswerk)",
+      "Adresse": "Westliche Zwingergasse 11",
+      "Telefonnummer": "0991 991222-0",
+      "E-Mail-Adresse": "deggendorf@deb-gruppe.org",
+      "Website": "https://www.deb.de/",
+      "Stand": "20.06.2026",
+      "lat": 48.8330796,
+      "lon": 12.9603378
+    }
+  ],
+  "Gesundheit": [
+    {
+      "Name": "DONAUISAR Klinikum Deggendorf",
+      "Adresse": "Perlasberger Str. 41",
+      "Telefonnummer": "0991/380-0",
+      "E-Mail-Adresse": "info@donau-isar-klinikum.de",
+      "Beshreibung": "Hier können Sie im Krankheitsfall oder bei akuten Notfällen rund um die Uhr medizinische Behandlung und stationäre Hilfe in Anspruch nehmen.",
+      "Website": "https://www.donau-isar-klinikum.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.8391963,
+      "lon": 12.9698983
+    },
+    {
+      "Name": "BRK Kreisverband Deggendorf",
+      "Adresse": "Wiesenstr. 8",
+      "Telefonnummer": "0991 36040",
+      "E-Mail-Adresse": "info@kvdeggendorf.brk.de",
+      "Beshreibung": "Hier können Sie Migrationsberatung, praktische Unterstützung im Alltag sowie Begleitung bei der Integration und medizinischen Versorgung erhalten.",
+      "Website": "https://www.kvdeggendorf.brk.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.8333875,
+      "lon": 12.9567435
+    },
+    {
+      "Name": "Gesundheitsamt Deggendorf",
+      "Adresse": "Pater-Fink-Straße 8",
+      "Telefonnummer": "0991 3100 150",
+      "E-Mail-Adresse": "Gesundheitswesen@lra-deg.bayern.de",
+      "Beshreibung": "Hier finden Sie offizielle Beratung zu Impfungen und Gesundheit für Migranten sowie viele nützliche Infomaterialien und Links auf ihrer Website.",
+      "Website": "https://www.landkreis-deggendorf.de/leben-arbeiten/gesundheit/gesundheitsamt/",
+      "Stand": "21.06.2026",
+      "lat": 48.8456305,
+      "lon": 12.9719992
+    }
+  ],
+  "Soziales": [
+    {
+      "Name": "Caritas-Zentrum",
+      "Adresse": "Pferdemarkt 20",
+      "Telefonnummer": "0991 38970",
+      "E-Mail-Adresse": null,
+      "Beshreibung": "Hier finden Sie konkrete Beratung für Migranten, Hilfe bei der Pflege von Angehörigen sowie viele nützliche Infomaterialien und Links auf ihrer Website.",
+      "Website": "https://www.caritas-deggendorf.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.8297006,
+      "lon": 12.9630332
+    },
+    {
+      "Name": "AnKER-Einrichtung Deggendorf",
+      "Adresse": "Stadtfeldstraße 11",
+      "Telefonnummer": "0911 94384904",
+      "E-Mail-Adresse": null,
+      "Beshreibung": "Hier finden Sie als Geflüchtete erste Unterstützung bei der Registrierung, dem Asylverfahren und der Erstversorgung sowie wichtige behördliche Informationen und nützliche Links auf ihrer Website.",
+      "Website": "https://www.bamf.de/SharedDocs/Struktur/Organisationseinheiten/DE/Standorte/deggendorf-anker-einheit.html?nn=281840",
+      "Stand": "21.06.2026",
+      "lat": 48.8402808,
+      "lon": 12.9511288
+    },
+    {
+      "Name": "Deggendorfer Tafel",
+      "Adresse": "Bahnhofstraße 70",
+      "Telefonnummer": "0991 2960116",
+      "E-Mail-Adresse": "christiane.preiss@deggendorf.de",
+      "Beshreibung": "Hier können Sie als Migrant mit geringem Einkommen günstige Lebensmittel erhalten sowie wichtige Informationen zur Anmeldung und nützliche Links auf ihrer Website finden.",
+      "Website": "https://www.deggendorf.de/rathaus/hauptverwaltung/hauptamt/buergerarbeit/deggendorfer-tafel",
+      "Stand": "21.06.2026",
+      "lat": 48.8368632,
+      "lon": 12.9537161
+    }
+  ],
+  "Vereine und Gemeinschaft": [
+    {
+      "Name": "☪️Türkisch-Islamische Gemeinde",
+      "Adresse": "Unterer Sommerfeldweg 9",
+      "Telefonnummer": "0991  33763",
+      "E-Mail-Adresse": "kontak@ditib-deggendorf.de",
+      "Beshreibung": "Hier finden Sie als muslimische Migranten religiöse, kulturelle und soziale Unterstützung in der Gemeinschaft sowie wichtige Kontakte und nützliche Links auf ihrer Website.",
+      "Website": "https://www.ditib-deggendorf.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.8187714,
+      "lon": 12.9508605
+    },
+    {
+      "Name": "🇺🇦 Koliiibri",
+      "Adresse": "Sudetenstraße 12",
+      "Telefonnummer": "0151 72103817",
+      "E-Mail-Adresse": "info@koliiibri.de",
+      "Beshreibung": "Hier können Sie als Migrant:in neue Kontakte knüpfen, an integrativen Veranstaltungen teilnehmen und in der Kleinen Kulturmühle willkommen sein.",
+      "Website": "https://koliiibri.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.836439,
+      "lon": 12.9782878
+    },
+    {
+      "Name": "Netzwerk für kulturelle Vielfalt",
+      "Adresse": "Arberstraße 15",
+      "Telefonnummer": "0179 6860531",
+      "E-Mail-Adresse": "info@vielfalt-deggendorf.de",
+      "Beshreibung": "Hier können Migrant:innen und Ukrainer:innen neue Kontakte knüpfen, an internationalen Veranstaltungen teilnehmen und kulturelle Vielfalt in Deggendorf erleben.",
+      "Website": "https://vielfalt-deggendorf.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.842496,
+      "lon": 12.9441819
+    },
+    {
+      "Name": "Mostik",
+      "Adresse": "Pferdemarkt 2",
+      "Telefonnummer": "0172 8385161",
+      "E-Mail-Adresse": "julia.urlacher@web.de",
+      "Beshreibung": "Hier finden speziell russischsprachige Migranten praktische Hilfe bei der Integration, Beratung im Alltag sowie kulturelle Angebote und nützliche Links auf ihrer Website",
+      "Website": "https://mostik-deggendorf.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.83056,
+      "lon": 12.9620917
+    }
+  ]
+}
