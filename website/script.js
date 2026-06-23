@@ -22,12 +22,16 @@ const categoryConfig = {
     "Vereine und Gemeinschaft": { color: "#16a085", emoji: "🌍" }
 };
 
-// ── Хелпер: повертає тільки entries активних категорій ────────────
+// ── Хелпер: активна категорія (одна, radio) ───────────────────────
+function getActiveCategory() {
+    const radio = document.querySelector('.category-filter:checked');
+    return radio ? radio.value : null;
+}
+
+// ── Хелпер: entries що відповідають активній категорії ────────────
 function getActiveEntries(entries) {
-    return entries.filter(({ category }) => {
-        const cb = document.querySelector(`.category-filter[value="${category}"]`);
-        return cb && cb.checked;
-    });
+    const active = getActiveCategory();
+    return entries.filter(({ category }) => category === active);
 }
 
 function createIcon(category) {
@@ -172,13 +176,103 @@ map.on('popupclose', () => {
 
 map.on('move', updateArrows);
 
+// ── Список установ ────────────────────────────────────────────────
+const locationListEl    = document.getElementById('location-list');
+const locationListInner = document.getElementById('location-list-inner');
+
+// Позиціонуємо #location-list прямо під #filter-panel з тією ж шириною
+function positionLocationList() {
+    const panel    = document.getElementById('filter-panel');
+    const rect     = panel.getBoundingClientRect();
+    const mainRect = document.getElementById('main-content').getBoundingClientRect();
+
+    locationListEl.style.top   = (rect.bottom - mainRect.top + 12) + 'px';
+    locationListEl.style.width = rect.width + 'px';
+}
+
+// Відкрити попап на конкретній картці
+function openPopupForRecord(marker, targetName, targetCategory) {
+    map.closePopup();
+    map.setView(marker.getLatLng(), Math.max(map.getZoom(), 16), { animate: true, duration: 0.5 });
+
+    setTimeout(() => {
+        marker.openPopup();
+
+        // Після того як popupopen відпрацював — переключаємо на потрібну картку
+        requestAnimationFrame(() => {
+            const state = currentState;
+            if (!state) return;
+
+            const idx = state.activeEntries.findIndex(
+                e => e.record["Name"] === targetName && e.category === targetCategory
+            );
+            if (idx !== -1 && idx !== state.index) {
+                state.index = idx;
+                const { record, category } = state.activeEntries[idx];
+                const popupEl = marker.getPopup().getElement();
+                const wrapper = popupEl && popupEl.querySelector('.leaflet-popup-content');
+                if (wrapper) {
+                    wrapper.innerHTML = buildCard(record, category, idx, state.activeEntries.length);
+                }
+                updateArrows();
+            }
+        });
+    }, 550);
+}
+
+function renderLocationList(category, allData) {
+    positionLocationList();
+    locationListInner.innerHTML = '';
+
+    const config  = categoryConfig[category] || { color: "#555" };
+    const records = allData[category] || [];
+
+    if (records.length === 0) {
+        locationListEl.classList.remove('visible');
+        return;
+    }
+
+    records.forEach(record => {
+        const name = record["Name"];
+        if (!name) return;
+
+        // Знаходимо відповідний маркер через popupState
+        let targetMarker = null;
+        for (const state of Object.values(popupState)) {
+            const match = state.allEntries.find(
+                e => e.record["Name"] === name && e.category === category
+            );
+            if (match) { targetMarker = state.marker; break; }
+        }
+
+        const item = document.createElement('div');
+        item.className = 'location-item';
+        item.innerHTML = `
+            <span class="location-item-dot" style="background:${config.color}"></span>
+            <span>${name}</span>
+        `;
+
+        if (targetMarker) {
+            item.addEventListener('click', () => {
+                openPopupForRecord(targetMarker, name, category);
+            });
+        }
+
+        locationListInner.appendChild(item);
+    });
+
+    locationListEl.classList.add('visible');
+}
+
 // ── Дані ──────────────────────────────────────────────────────────
-const popupState = {};
+const popupState        = {};
 const markersByCategory = {};
+let   allDataGlobal     = null;
 
 fetch('../data/processed.json')
     .then(res => res.json())
     .then(data => {
+        allDataGlobal = data;
         const coordMap = {};
 
         Object.entries(data).forEach(([category, records]) => {
@@ -193,9 +287,8 @@ fetch('../data/processed.json')
         Object.entries(coordMap).forEach(([key, entries]) => {
             const [lat, lon] = key.split(',').map(Number);
 
-            // Іконка — перша активна категорія, або перша взагалі як fallback
             const initialActive = getActiveEntries(entries);
-            const iconCategory = (initialActive[0] || entries[0]).category;
+            const iconCategory  = (initialActive[0] || entries[0]).category;
 
             const marker = L.marker([lat, lon], { icon: createIcon(iconCategory) });
             popupState[key] = { index: 0, allEntries: entries, marker };
@@ -203,12 +296,12 @@ fetch('../data/processed.json')
             marker.bindPopup('', { maxWidth: 320, className: 'custom-popup' });
 
             marker.on('popupopen', () => {
-                const state = popupState[key];
+                const state         = popupState[key];
                 const activeEntries = getActiveEntries(state.allEntries);
 
-                state.index = 0;
+                state.index         = 0;
                 state.activeEntries = activeEntries;
-                currentState = state;
+                currentState        = state;
 
                 const popupEl = marker.getPopup().getElement();
                 const wrapper = popupEl && popupEl.querySelector('.leaflet-popup-content');
@@ -221,13 +314,11 @@ fetch('../data/processed.json')
                 requestAnimationFrame(() => {
                     updateArrows();
 
-                    // ── Панорамування: перевіряємо чи попап ховається за хедером ──
                     const popupElCheck = marker.getPopup().getElement();
                     if (popupElCheck) {
-                        const headerEl = document.querySelector('header');
-                        const headerH  = headerEl ? headerEl.offsetHeight : 0;
-                        const padding  = 16;
-
+                        const headerEl  = document.querySelector('header');
+                        const headerH   = headerEl ? headerEl.offsetHeight : 0;
+                        const padding   = 16;
                         const popupRect = popupElCheck.getBoundingClientRect();
                         const mapRect   = document.getElementById('map').getBoundingClientRect();
                         const topEdge   = popupRect.top - mapRect.top;
@@ -256,18 +347,20 @@ fetch('../data/processed.json')
                 }
             });
 
-            const anyChecked = entries.some(({ category }) => {
-                const cb = document.querySelector(`.category-filter[value="${category}"]`);
-                return cb && cb.checked;
-            });
-            if (anyChecked) marker.addTo(map);
+            if (initialActive.length > 0) marker.addTo(map);
         });
+
+        // Початковий список (Behörden за замовчуванням)
+        const defaultCat = getActiveCategory();
+        if (defaultCat) renderLocationList(defaultCat, allDataGlobal);
     })
     .catch(err => console.error("Fehler beim Laden der Daten:", err));
 
-// ── Фільтрація ────────────────────────────────────────────────────
-document.querySelectorAll('.category-filter').forEach(checkbox => {
-    checkbox.addEventListener('change', () => {
+// ── Radio-фільтрація ──────────────────────────────────────────────
+document.querySelectorAll('.category-filter').forEach(radio => {
+    radio.addEventListener('change', () => {
+        const activeCategory = getActiveCategory();
+
         const allMarkers = new Set(Object.values(markersByCategory).flat());
 
         allMarkers.forEach(marker => {
@@ -275,42 +368,62 @@ document.querySelectorAll('.category-filter').forEach(checkbox => {
                 .filter(([, markers]) => markers.includes(marker))
                 .map(([cat]) => cat);
 
-            const checkedCategories = markerCategories.filter(cat => {
-                const cb = document.querySelector(`.category-filter[value="${cat}"]`);
-                return cb && cb.checked;
-            });
-
-            if (checkedCategories.length > 0) {
-                // Оновлюємо іконку на першу активну категорію
-                marker.setIcon(createIcon(checkedCategories[0]));
+            if (markerCategories.includes(activeCategory)) {
+                marker.setIcon(createIcon(activeCategory));
                 marker.addTo(map);
             } else {
                 marker.remove();
             }
         });
 
-        // ── Оновлюємо відкритий попап при зміні фільтра ──────────
-        if (!currentState) return;
-
-        const activeEntries = getActiveEntries(currentState.allEntries);
-
-        // Якщо жодна активна категорія не залишилась — закриваємо попап
-        if (activeEntries.length === 0) {
-            currentState.marker.closePopup();
-            return;
+        // Оновлюємо відкритий попап
+        if (currentState) {
+            const activeEntries = getActiveEntries(currentState.allEntries);
+            if (activeEntries.length === 0) {
+                currentState.marker.closePopup();
+            } else {
+                currentState.activeEntries = activeEntries;
+                currentState.index = 0;
+                const { record, category } = activeEntries[0];
+                const popupEl = currentState.marker.getPopup().getElement();
+                const wrapper = popupEl && popupEl.querySelector('.leaflet-popup-content');
+                if (wrapper) {
+                    wrapper.innerHTML = buildCard(record, category, 0, activeEntries.length);
+                }
+                updateArrows();
+            }
         }
 
-        // Клампуємо індекс щоб не вийти за межі нового списку
-        currentState.activeEntries = activeEntries;
-        currentState.index = Math.min(currentState.index, activeEntries.length - 1);
-
-        const { record, category } = activeEntries[currentState.index];
-        const popupEl = currentState.marker.getPopup().getElement();
-        const wrapper = popupEl && popupEl.querySelector('.leaflet-popup-content');
-        if (wrapper) {
-            wrapper.innerHTML = buildCard(record, category, currentState.index, activeEntries.length);
-        }
-
-        updateArrows();
+        // Оновлюємо список установ
+        if (allDataGlobal) renderLocationList(activeCategory, allDataGlobal);
     });
 });
+
+// Оновлюємо позицію списку при зміні розміру вікна
+window.addEventListener('resize', () => {
+    if (locationListEl.classList.contains('visible')) {
+        positionLocationList();
+    }
+});
+
+// ── Колір активної кнопки категорії ──────────────────────────────
+function updateActiveFilterColor() {
+    document.querySelectorAll('.category-filter').forEach(radio => {
+        const tag   = radio.nextElementSibling;
+        const color = (categoryConfig[radio.value] || {}).color;
+        if (radio.checked && color) {
+            tag.style.backgroundColor = color;
+            tag.style.borderColor     = color;
+            tag.style.color           = '#ffffff';
+        } else {
+            tag.style.backgroundColor = '';
+            tag.style.borderColor     = '';
+            tag.style.color           = '';
+        }
+    });
+}
+
+document.querySelectorAll('.category-filter').forEach(radio => {
+    radio.addEventListener('change', updateActiveFilterColor);
+});
+updateActiveFilterColor();
