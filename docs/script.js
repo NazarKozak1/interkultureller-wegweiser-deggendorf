@@ -269,7 +269,7 @@ const popupState        = {};
 const markersByCategory = {};
 let   allDataGlobal     = null;
 
-fetch('../data/processed.json')
+fetch('data/processed.json')
     .then(res => res.json())
     .then(data => {
         allDataGlobal = data;
