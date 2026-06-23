@@ -1,0 +1,26 @@
+name: Daily ETL
+on:
+  schedule:
+    - cron: '0 4 * * *' 
+  workflow_dispatch:      
+  
+jobs:
+  run-etl:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.11'
+      - run: pip install -r requirements.txt
+      - name: Run ETL
+        run: python src/geocode_etl/orchestrate.py
+        env:
+          PYTHONPATH: ${{ github.workspace }}
+      - name: Commit updated data
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add data/processed.json
+          git diff --cached --quiet || git commit -m "chore: update processed.json"
+          git push
