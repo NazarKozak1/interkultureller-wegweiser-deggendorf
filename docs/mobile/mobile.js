@@ -324,3 +324,13 @@ buildMobilePills();
 window.addEventListener('resize', () => {
     if (!isMobile()) closeBottomSheet();
 });
+
+// Зупиняємо touch events на пігулках щоб карта не рухалась
+const filterRow = document.getElementById('mobile-filter-row');
+if (filterRow) {
+    L.DomEvent.disableScrollPropagation(filterRow);
+    L.DomEvent.disableClickPropagation(filterRow);
+    filterRow.addEventListener('touchstart', e => e.stopPropagation(), { passive: false });
+    filterRow.addEventListener('touchmove',  e => e.stopPropagation(), { passive: false });
+    filterRow.addEventListener('touchend',   e => e.stopPropagation(), { passive: false });
+}
