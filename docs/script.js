@@ -3,7 +3,7 @@ const map = L.map('map', {
     zoomControl: false,
     maxBounds: [
         [48.882, 12.915],
-        [48.810, 13.010]
+        [48.795, 13.010]
     ],
     maxBoundsViscosity: 1.0
 }).setView([48.837, 12.962], 14);
@@ -117,7 +117,7 @@ document.getElementById('map').appendChild(arrowRight);
 L.DomEvent.disableClickPropagation(arrowLeft);
 L.DomEvent.disableClickPropagation(arrowRight);
 
-let currentState = null; // { allEntries, activeEntries, index, marker }
+let currentState = null;
 
 function updateArrows() {
     if (!currentState || currentState.activeEntries.length <= 1) {
@@ -180,7 +180,6 @@ map.on('move', updateArrows);
 const locationListEl    = document.getElementById('location-list');
 const locationListInner = document.getElementById('location-list-inner');
 
-// Позиціонуємо #location-list прямо під #filter-panel з тією ж шириною
 function positionLocationList() {
     const panel    = document.getElementById('filter-panel');
     const rect     = panel.getBoundingClientRect();
@@ -190,7 +189,6 @@ function positionLocationList() {
     locationListEl.style.width = rect.width + 'px';
 }
 
-// Відкрити попап на конкретній картці
 function openPopupForRecord(marker, targetName, targetCategory) {
     map.closePopup();
     map.setView(marker.getLatLng(), Math.max(map.getZoom(), 16), { animate: true, duration: 0.5 });
@@ -198,7 +196,6 @@ function openPopupForRecord(marker, targetName, targetCategory) {
     setTimeout(() => {
         marker.openPopup();
 
-        // Після того як popupopen відпрацював — переключаємо на потрібну картку
         requestAnimationFrame(() => {
             const state = currentState;
             if (!state) return;
@@ -236,7 +233,6 @@ function renderLocationList(category, allData) {
         const name = record["Name"];
         if (!name) return;
 
-        // Знаходимо відповідний маркер через popupState
         let targetMarker = null;
         for (const state of Object.values(popupState)) {
             const match = state.allEntries.find(
@@ -294,8 +290,12 @@ fetch('data/processed.json')
             popupState[key] = { index: 0, allEntries: entries, marker };
 
             marker.bindPopup('', { maxWidth: 320, className: 'custom-popup' });
+            attachMobileMarkerClick(marker, entries);
 
             marker.on('popupopen', () => {
+                // На мобільному popup'и не використовуємо — bottom sheet робить все сам
+                if (isMobile()) return;
+
                 const state         = popupState[key];
                 const activeEntries = getActiveEntries(state.allEntries);
 
@@ -350,7 +350,6 @@ fetch('data/processed.json')
             if (initialActive.length > 0) marker.addTo(map);
         });
 
-        // Початковий список (Behörden за замовчуванням)
         const defaultCat = getActiveCategory();
         if (defaultCat) renderLocationList(defaultCat, allDataGlobal);
     })
@@ -376,7 +375,6 @@ document.querySelectorAll('.category-filter').forEach(radio => {
             }
         });
 
-        // Оновлюємо відкритий попап
         if (currentState) {
             const activeEntries = getActiveEntries(currentState.allEntries);
             if (activeEntries.length === 0) {
@@ -394,12 +392,10 @@ document.querySelectorAll('.category-filter').forEach(radio => {
             }
         }
 
-        // Оновлюємо список установ
         if (allDataGlobal) renderLocationList(activeCategory, allDataGlobal);
     });
 });
 
-// Оновлюємо позицію списку при зміні розміру вікна
 window.addEventListener('resize', () => {
     if (locationListEl.classList.contains('visible')) {
         positionLocationList();

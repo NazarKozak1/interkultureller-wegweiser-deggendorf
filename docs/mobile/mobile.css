@@ -1,0 +1,197 @@
+/* ===== МОБІЛЬНА АДАПТАЦІЯ (≤768px) ===== */
+
+@media (max-width: 768px) {
+
+    /* Хедер — компактніший */
+    header {
+        padding: 12px 16px 0;
+        flex-shrink: 0;
+    }
+
+    header h1 {
+        font-size: 1rem;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    /* Рядок пігулок під заголовком */
+    #mobile-filter-row {
+        display: flex;
+        gap: 8px;
+        overflow-x: auto;
+        padding-bottom: 10px;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        /* Градієнт що показує що є ще контент праворуч */
+        -webkit-mask-image: linear-gradient(to right, black 85%, transparent 100%);
+        mask-image: linear-gradient(to right, black 85%, transparent 100%);
+    }
+
+    #mobile-filter-row::-webkit-scrollbar {
+        display: none;
+    }
+
+    .mobile-pill {
+        flex-shrink: 0;
+        padding: 6px 14px;
+        border-radius: 20px;
+        font-size: 0.82rem;
+        font-weight: 600;
+        white-space: nowrap;
+        cursor: pointer;
+        border: 1.5px solid transparent;
+        background: #f4f6f8;
+        color: #637381;
+        transition: all 0.2s ease;
+        user-select: none;
+    }
+
+    .mobile-pill.active {
+        color: white;
+        border-color: transparent;
+    }
+
+    /* Ховаємо десктопні елементи */
+    #filter-panel {
+        display: none !important;
+    }
+
+    #location-list {
+        display: none !important;
+    }
+
+    /* Стрілки теж ховаємо на мобільному */
+    .popup-arrow {
+        display: none !important;
+    }
+
+    /* Попапи Leaflet теж ховаємо */
+    .leaflet-popup {
+        display: none !important;
+    }
+
+    /* Карта на весь екран */
+    #main-content {
+        flex-direction: column;
+    }
+
+    #map {
+        flex: 1;
+    }
+
+    /* ── Bottom Sheet ── */
+    #bottom-sheet {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-radius: 20px 20px 0 0;
+        box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.15);
+        z-index: 2000;
+        transform: translateY(100%);
+        transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        max-height: 75vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #bottom-sheet.open {
+        transform: translateY(0);
+    }
+
+    /* Handle зверху */
+    #bottom-sheet-handle {
+        display: flex;
+        justify-content: center;
+        padding: 12px 0 4px;
+        flex-shrink: 0;
+    }
+
+    #bottom-sheet-handle::before {
+        content: '';
+        width: 36px;
+        height: 4px;
+        background: #d0d7de;
+        border-radius: 2px;
+    }
+
+    /* Контент bottom sheet — скролиться */
+    #bottom-sheet-content {
+        overflow-y: auto;
+        flex: 1;
+        padding-bottom: 24px;
+    }
+
+    /* Кнопка закриття */
+    #bottom-sheet-close {
+        position: absolute;
+        top: 10px;
+        right: 14px;
+        background: #f4f6f8;
+        border: none;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        font-size: 1rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #637381;
+        z-index: 10;
+    }
+
+    /* Пагінація в bottom sheet */
+    #bottom-sheet-pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 16px;
+        border-bottom: 1px solid #f0f0f0;
+        flex-shrink: 0;
+    }
+
+    .bs-nav {
+        background: #f4f6f8;
+        border: none;
+        border-radius: 8px;
+        padding: 6px 16px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        color: #1a252f;
+        transition: background 0.2s;
+    }
+
+    .bs-nav:hover:not(:disabled) {
+        background: #1565c0;
+        color: white;
+    }
+
+    .bs-nav:disabled {
+        opacity: 0.25;
+        cursor: default;
+    }
+
+    .bs-counter {
+        font-size: 0.82rem;
+        font-weight: 700;
+        color: #888;
+    }
+
+    /* Footer ховаємо на мобільному */
+    footer {
+        display: none;
+    }
+}
+
+/* На десктопі ховаємо мобільні елементи */
+@media (min-width: 769px) {
+    #mobile-filter-row {
+        display: none;
+    }
+
+    #bottom-sheet {
+        display: none !important;
+    }
+}

@@ -9,11 +9,14 @@
 
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="popup-styles.css">
+    <link rel="stylesheet" href="mobile/mobile.css">
 </head>
 <body>
 
     <header>
         <h1>Interkultureller Wegweiser Deggendorf</h1>
+        <!-- Мобільний рядок пігулок — будується через JS -->
+        <div id="mobile-filter-row"></div>
     </header>
 
     <main id="main-content">
@@ -62,5 +65,6 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <script src="script.js"></script>
+    <script src="mobile/mobile.js"></script>
 </body>
 </html>
