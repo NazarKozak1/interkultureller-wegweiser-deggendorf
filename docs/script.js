@@ -52,6 +52,39 @@ function createIcon(category) {
     });
 }
 
+function darkenColor(hex, amount = 40) {
+    const num = parseInt(hex.replace('#', ''), 16);
+    const r = Math.max(0, (num >> 16) - amount);
+    const g = Math.max(0, ((num >> 8) & 0xff) - amount);
+    const b = Math.max(0, (num & 0xff) - amount);
+    return '#' + [r, g, b].map(v => v.toString(16).padStart(2, '0')).join('');
+}
+
+function createActiveIcon(category) {
+    const config = categoryConfig[category] || { color: '#555', emoji: '📍' };
+    const dark = darkenColor(config.color, 30);
+    // Маркер без емодзі: темніший колір + біле кільце зовні + білий круг всередині
+    const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 40 50" width="48" height="58">
+            <!-- Зовнішнє біле кільце -->
+            <path d="M16 0 C7.2 0 0 7.2 0 16 C0 26 16 42 16 42 C16 42 32 26 32 16 C32 7.2 24.8 0 16 0Z"
+                  fill="white" stroke="white" stroke-width="4"/>
+            <!-- Основна форма маркера -->
+            <path d="M16 0 C7.2 0 0 7.2 0 16 C0 26 16 42 16 42 C16 42 32 26 32 16 C32 7.2 24.8 0 16 0Z"
+                  fill="${dark}" stroke="none"/>
+            <!-- Білий круг всередині -->
+            <circle cx="16" cy="16" r="7" fill="white" opacity="0.9"/>
+        </svg>
+    `;
+    return L.divIcon({
+        html: svg,
+        className: '',
+        iconSize: [48, 58],
+        iconAnchor: [24, 58],
+        popupAnchor: [0, -60]
+    });
+}
+
 function formatHours(record) {
     const days = [
         { label: "Mo", key: "Montag" },
@@ -118,6 +151,38 @@ L.DomEvent.disableClickPropagation(arrowLeft);
 L.DomEvent.disableClickPropagation(arrowRight);
 
 let currentState = null;
+let activeMarker = null;
+let activeMarkerCategory = null; // зберігаємо категорію окремо
+
+function setActiveMarker(marker, category) {
+    if (activeMarker && activeMarker !== marker) {
+        if (activeMarkerCategory) activeMarker.setIcon(createIcon(activeMarkerCategory));
+    }
+    activeMarker = marker;
+    activeMarkerCategory = category;
+    marker.setIcon(createActiveIcon(category));
+
+    requestAnimationFrame(() => {
+        const el = marker.getElement();
+        if (el) {
+            el.style.transition = 'transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1)';
+            el.style.transformOrigin = 'bottom center';
+        }
+    });
+}
+
+function clearActiveMarker() {
+    if (activeMarker) {
+        const el = activeMarker.getElement();
+        if (el) {
+            el.style.transition = 'transform 0.2s ease';
+            el.style.transformOrigin = 'bottom center';
+        }
+        if (activeMarkerCategory) activeMarker.setIcon(createIcon(activeMarkerCategory));
+        activeMarker = null;
+        activeMarkerCategory = null;
+    }
+}
 
 function updateArrows() {
     if (!currentState || currentState.activeEntries.length <= 1) {
@@ -172,6 +237,7 @@ map.on('popupclose', () => {
     arrowLeft.classList.remove('visible');
     arrowRight.classList.remove('visible');
     currentState = null;
+    clearActiveMarker();
 });
 
 map.on('move', updateArrows);
@@ -298,6 +364,7 @@ fetch('data/processed.json')
 
                 const state         = popupState[key];
                 const activeEntries = getActiveEntries(state.allEntries);
+                setActiveMarker(marker, (activeEntries[0] || state.allEntries[0]).category);
 
                 state.index         = 0;
                 state.activeEntries = activeEntries;
@@ -360,6 +427,11 @@ document.querySelectorAll('.category-filter').forEach(radio => {
     radio.addEventListener('change', () => {
         const activeCategory = getActiveCategory();
 
+        // Завжди закриваємо попап і скидаємо активний маркер
+        map.closePopup();
+        clearActiveMarker();
+        currentState = null;
+
         const allMarkers = new Set(Object.values(markersByCategory).flat());
 
         allMarkers.forEach(marker => {
@@ -374,23 +446,6 @@ document.querySelectorAll('.category-filter').forEach(radio => {
                 marker.remove();
             }
         });
-
-        if (currentState) {
-            const activeEntries = getActiveEntries(currentState.allEntries);
-            if (activeEntries.length === 0) {
-                currentState.marker.closePopup();
-            } else {
-                currentState.activeEntries = activeEntries;
-                currentState.index = 0;
-                const { record, category } = activeEntries[0];
-                const popupEl = currentState.marker.getPopup().getElement();
-                const wrapper = popupEl && popupEl.querySelector('.leaflet-popup-content');
-                if (wrapper) {
-                    wrapper.innerHTML = buildCard(record, category, 0, activeEntries.length);
-                }
-                updateArrows();
-            }
-        }
 
         if (allDataGlobal) renderLocationList(activeCategory, allDataGlobal);
     });

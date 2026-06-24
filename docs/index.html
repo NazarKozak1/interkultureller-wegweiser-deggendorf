@@ -14,12 +14,16 @@
 <body>
 
     <header>
-        <h1>Interkultureller Wegweiser Deggendorf</h1>
-        <!-- Мобільний рядок пігулок — будується через JS -->
-        <div id="mobile-filter-row"></div>
+        <div class="header-inner">
+            <h1 data-short="Wegweiser Deggendorf">Interkultureller Wegweiser Deggendorf</h1>
+            <a href="contact.html" class="header-contact-link">Impressum</a>
+        </div>
     </header>
 
     <main id="main-content">
+
+        <!-- Мобільні пігулки — над картою -->
+        <div id="mobile-filter-row"></div>
 
         <div id="filter-panel">
             <h3>Kategorien</h3>
@@ -57,10 +61,6 @@
 
         <div id="map"></div>
     </main>
-
-    <footer>
-        <span>© 2025 Interkultureller Wegweiser Deggendorf</span>
-    </footer>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 

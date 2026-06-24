@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum – Interkultureller Wegweiser Deggendorf</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f4f6f8;
+            color: #1a252f;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #ffffff;
+            border-bottom: 1px solid #eaeaea;
+            padding: 0 40px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-sizing: border-box;
+        }
+
+        header h1 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            margin: 0;
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 0 16px; height: 56px; }
+            header h1 { font-size: 1rem; }
+        }
+
+        header a {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: #1a252f;
+            text-decoration: none;
+            white-space: nowrap;
+            padding: 7px 16px;
+            border: 1.5px solid #eaeaea;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        header a:hover {
+            background: #f4f6f8;
+            border-color: #d0d7de;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            padding: 40px;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .card .subtitle {
+            font-size: 0.85rem;
+            color: #637381;
+            margin-bottom: 32px;
+            line-height: 1.5;
+        }
+
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: #aab0b8;
+            margin-bottom: 12px;
+        }
+
+        .name-block {
+            margin-bottom: 28px;
+        }
+
+        .name-block .name {
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .name-block .location {
+            font-size: 0.85rem;
+            color: #637381;
+            margin-top: 2px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.92rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+        }
+
+        .contact-btn svg {
+            flex-shrink: 0;
+        }
+
+        .btn-whatsapp {
+            background: #e8f8ee;
+            color: #1a7a3a;
+        }
+
+        .btn-telegram {
+            background: #e8f4fd;
+            color: #0a6da8;
+        }
+
+        .btn-email {
+            background: #f4f6f8;
+            color: #1a252f;
+        }
+
+        .divider {
+            border: none;
+            border-top: 1px solid #f0f0f0;
+            margin: 28px 0;
+        }
+
+        footer {
+            background: rgba(0,0,0,0.65);
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        footer span {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.72rem;
+        }
+
+        @media (max-width: 480px) {
+            header { padding: 16px 20px; }
+            header h1 { font-size: 1rem; }
+            .card { padding: 28px 20px; }
+        }
+
+        @media (max-width: 480px) {
+            header h1 {
+                font-size: 0;
+            }
+            header h1::before {
+                content: attr(data-short);
+                font-size: 1rem;
+                font-weight: 800;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1 data-short="Wegweiser Deggendorf">Interkultureller Wegweiser Deggendorf</h1>
+        <a href="index.html">← Zur Karte</a>
+    </header>
+
+    <main>
+        <div class="card">
+            <h2>Impressum & Kontakt</h2>
+            <p class="subtitle">
+                Dieses Projekt ist eine ehrenamtliche Initiative zur Unterstützung
+                von Migranten in Deggendorf. Bei Fragen oder Anregungen — schreib mir gerne.
+            </p>
+
+            <div class="name-block">
+                <div class="section-label">Verantwortlich für den Inhalt</div>
+                <div class="name">Nazar Kozak</div>
+                <div class="location">Deggendorf, Bayern</div>
+            </div>
+
+            <div class="section-label">Kontakt</div>
+            <div class="contact-buttons">
+
+                <a href="https://wa.me/491637143976" target="_blank" class="contact-btn btn-whatsapp">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" fill="#25D366"/>
+                        <path d="M12 2C6.477 2 2 6.477 2 12c0 1.89.525 3.66 1.438 5.168L2 22l4.978-1.306A9.96 9.96 0 0012 22c5.523 0 10-4.477 10-10S17.523 2 12 2zm0 18a7.96 7.96 0 01-4.076-1.115l-.29-.173-3.007.789.803-2.931-.19-.302A7.96 7.96 0 014 12c0-4.411 3.589-8 8-8s8 3.589 8 8-3.589 8-8 8z" fill="#25D366"/>
+                    </svg>
+                    WhatsApp
+                </a>
+
+                <a href="https://t.me/nazarkozak" target="_blank" class="contact-btn btn-telegram">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm4.93 6.779l-1.687 7.954c-.124.557-.453.693-.918.431l-2.54-1.873-1.226 1.18c-.136.136-.249.249-.51.249l.181-2.584 4.693-4.239c.204-.181-.044-.282-.316-.1L7.693 14.18l-2.497-.78c-.542-.17-.554-.542.113-.802l9.74-3.754c.452-.163.847.1.881.935z" fill="#2CA5E0"/>
+                    </svg>
+                    Telegram
+                </a>
+
+                <a href="mailto:nazar08kozak@gmail.com" class="contact-btn btn-email">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" fill="#637381"/>
+                    </svg>
+                    nazar08kozak@gmail.com
+                </a>
+
+            </div>
+
+            <hr class="divider">
+
+            <p style="font-size:0.78rem; color:#aab0b8; line-height:1.6;">
+                Diese Website dient ausschließlich Informationszwecken. Alle Angaben ohne Gewähr.
+                Stand der Daten wird regelmäßig aktualisiert.
+            </p>
+        </div>
+    </main>
+
+</body>
+</html>

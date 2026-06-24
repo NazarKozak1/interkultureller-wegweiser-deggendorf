@@ -53,47 +53,174 @@ function buildMobilePills() {
     });
 }
 
-// ── Bottom Sheet ──────────────────────────────────────────────────
+// ── Bottom Sheet snap points ──────────────────────────────────────
+// Sheet має фіксовану висоту 75dvh.
+// translateY у пікселях:
+//   full:      0              → весь sheet видно
+//   peek:      sheetH * 0.5   → видно нижні 50% sheet
+//   collapsed: sheetH - peekZoneH → видно тільки peek zone
 
+let currentSnap = 'peek';
 let bsState = { entries: [], index: 0 };
-let sheetOpenedOnce = false;
 
-function openBottomSheet(activeEntries, markerLatLng) {
+function getSheetH() {
+    return document.getElementById('bottom-sheet').offsetHeight;
+}
+
+function getPeekZoneH() {
+    const el = document.getElementById('bottom-sheet-peek-zone');
+    const handle = document.getElementById('bottom-sheet-handle');
+    return (el ? el.offsetHeight : 0) + (handle ? handle.offsetHeight : 0);
+}
+
+function snapTo(snapName, animate = true) {
+    const sheet = document.getElementById('bottom-sheet');
+    currentSnap = snapName;
+
+    const sheetH = getSheetH();
+    let translateY;
+
+    if (snapName === 'full') {
+        translateY = 0;
+    } else if (snapName === 'peek') {
+        // Показуємо peek zone повністю
+        const peekH = getPeekZoneH();
+        translateY = sheetH - peekH;
+    } else {
+        // collapsed — видно тільки назву та адресу (перші два елементи peek zone)
+        const handleEl  = document.getElementById('bottom-sheet-handle');
+        const paginEl   = document.getElementById('bottom-sheet-pagination');
+        const catEl     = document.querySelector('.bs-category-dot');
+        const titleEl   = document.querySelector('.bs-title-preview');
+        const addressEl = document.querySelector('.bs-address-preview');
+        const paginH    = (paginEl && paginEl.style.display !== 'none') ? paginEl.offsetHeight : 0;
+        const visibleH  = (handleEl  ? handleEl.offsetHeight  : 0)
+                        + paginH
+                        + (catEl     ? catEl.offsetHeight     : 0)
+                        + (titleEl   ? titleEl.offsetHeight   : 0)
+                        + (addressEl ? addressEl.offsetHeight : 0)
+                        + 24;
+        translateY = sheetH - visibleH;
+    }
+
+    sheet.style.transition = animate
+        ? 'transform 0.32s cubic-bezier(0.4, 0, 0.2, 1)'
+        : 'none';
+    sheet.style.transform = `translateY(${translateY}px)`;
+
+    const content = document.getElementById('bottom-sheet-content');
+    content.style.overflowY = snapName === 'full' ? 'auto' : 'hidden';
+}
+
+function openBottomSheet(activeEntries, marker) {
     if (!isMobile() || activeEntries.length === 0) return;
 
     bsState = { entries: activeEntries, index: 0 };
     renderBottomSheet();
+    if (marker) setActiveMarker(marker, activeEntries[0].category);
 
     const sheet = document.getElementById('bottom-sheet');
+    sheet.style.transition = 'none';
+    sheet.style.transform = 'translateY(100%)';
     sheet.classList.add('open');
 
-    // Панорамуємо тільки при першому відкритті sheet
-    if (!sheetOpenedOnce) {
-        sheetOpenedOnce = true;
+    // Чекаємо один фрейм щоб sheet відрендерився і offsetHeight був правильний
+    requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-            const sheetH      = sheet.offsetHeight;
-            const mapH        = document.getElementById('map').offsetHeight;
-            const padding     = 60;
-
-            if (markerLatLng) {
-                const markerPx    = map.latLngToContainerPoint(markerLatLng);
-                const visibleMapH = mapH - sheetH;
-
-                if (markerPx.y > visibleMapH - padding) {
-                    const offset = markerPx.y - (visibleMapH - padding);
-                    map.panBy([0, offset], { animate: true, duration: 0.3 });
-                }
-            }
+            snapTo('peek', true);
         });
-    }
+    });
 }
 
 function closeBottomSheet() {
     const sheet = document.getElementById('bottom-sheet');
-    if (sheet) sheet.classList.remove('open');
-    sheetOpenedOnce = false; // скидаємо при закритті
+    if (!sheet) return;
+    sheet.style.transition = 'transform 0.32s cubic-bezier(0.4, 0, 0.2, 1)';
+    sheet.style.transform = 'translateY(100%)';
+    setTimeout(() => sheet.classList.remove('open'), 320);
+    clearActiveMarker();
     map.closePopup();
 }
+
+// ── Touch drag ────────────────────────────────────────────────────
+
+function initSheetDrag(sheet) {
+    const handle   = document.getElementById('bottom-sheet-handle');
+    const peekZone = document.getElementById('bottom-sheet-peek-zone');
+    let startY = 0;
+    let startTranslate = 0;
+    let isDragging = false;
+
+    function getCurrentTranslate() {
+        const matrix = new DOMMatrix(window.getComputedStyle(sheet).transform);
+        return matrix.m42;
+    }
+
+    function onTouchStart(e) {
+        startY = e.touches[0].clientY;
+        startTranslate = getCurrentTranslate();
+        isDragging = true;
+        sheet.style.transition = 'none';
+    }
+
+    function onTouchMove(e) {
+        if (!isDragging) return;
+        const dy = e.touches[0].clientY - startY;
+        const newY = Math.max(0, startTranslate + dy);
+        sheet.style.transform = `translateY(${newY}px)`;
+    }
+
+    function onTouchEnd() {
+        if (!isDragging) return;
+        isDragging = false;
+
+        const currentY  = getCurrentTranslate();
+        const sheetH    = getSheetH();
+        const peekH     = getPeekZoneH();
+
+        const fullY      = 0;
+        const peekY      = sheetH - peekH;
+
+        const handleEl2  = document.getElementById('bottom-sheet-handle');
+        const paginEl2   = document.getElementById('bottom-sheet-pagination');
+        const catEl2     = document.querySelector('.bs-category-dot');
+        const titleEl2   = document.querySelector('.bs-title-preview');
+        const addressEl2 = document.querySelector('.bs-address-preview');
+        const paginH2    = (paginEl2 && paginEl2.style.display !== 'none') ? paginEl2.offsetHeight : 0;
+        const visibleH2  = (handleEl2  ? handleEl2.offsetHeight  : 0)
+                         + paginH2
+                         + (catEl2     ? catEl2.offsetHeight     : 0)
+                         + (titleEl2   ? titleEl2.offsetHeight   : 0)
+                         + (addressEl2 ? addressEl2.offsetHeight : 0)
+                         + 24;
+        const collapsedY = sheetH - visibleH2;
+
+        const distFull      = Math.abs(currentY - fullY);
+        const distPeek      = Math.abs(currentY - peekY);
+        const distCollapsed = Math.abs(currentY - collapsedY);
+
+        if (distFull <= distPeek && distFull <= distCollapsed) {
+            snapTo('full');
+        } else if (distPeek <= distCollapsed) {
+            snapTo('peek');
+        } else {
+            snapTo('collapsed');
+        }
+    }
+
+    handle.addEventListener('touchstart',   onTouchStart, { passive: true });
+    handle.addEventListener('touchmove',    onTouchMove,  { passive: true });
+    handle.addEventListener('touchend',     onTouchEnd);
+    peekZone.addEventListener('touchstart', onTouchStart, { passive: true });
+    peekZone.addEventListener('touchmove',  onTouchMove,  { passive: true });
+    peekZone.addEventListener('touchend',   onTouchEnd);
+
+    peekZone.addEventListener('click', () => {
+        if (currentSnap === 'collapsed') snapTo('peek');
+    });
+}
+
+// ── Рендер контенту ───────────────────────────────────────────────
 
 function renderBottomSheet() {
     const { entries, index } = bsState;
@@ -101,57 +228,61 @@ function renderBottomSheet() {
     const { record, category } = entries[index];
     const config = categoryConfig[category] || { color: '#555', emoji: '📍' };
 
-    const pagination = document.getElementById('bottom-sheet-pagination');
-    if (total > 1) {
-        pagination.style.display = 'flex';
-        document.getElementById('bs-prev').disabled = index === 0;
-        document.getElementById('bs-next').disabled = index === total - 1;
-        document.getElementById('bs-counter').textContent = `${index + 1} / ${total}`;
-    } else {
-        pagination.style.display = 'none';
-    }
-
     const description = record["Beschreibung"] || record["Beshreibung"] || "";
     const phone   = record["Telefonnummer"];
     const email   = record["E-Mail-Adresse"];
     const website = record["Website"];
     const hours   = formatHours(record);
 
-    let html = '';
-
-    html += `<div class="popup-category" style="background:${config.color}">${config.emoji} ${category}</div>`;
-    html += `<h3 class="popup-title">${record["Name"]}</h3>`;
-    html += `<p class="popup-address">📍 ${record["Adresse"]}</p>`;
-
-    if (description) html += `<p class="popup-desc">${description}</p>`;
-    if (hours) html += `<div class="popup-section"><strong>Öffnungszeiten</strong>${hours}</div>`;
-
-    html += `<div class="popup-contacts">`;
-    if (phone)   html += `<a href="tel:${phone}" class="popup-btn">📞 ${phone}</a>`;
-    if (email)   html += `<a href="mailto:${email}" class="popup-btn">✉️ ${email}</a>`;
-    if (website) html += `<a href="${website}" target="_blank" class="popup-btn popup-btn-web">🌐 Website</a>`;
-    html += `</div>`;
-
+    // Peek zone — назва, адреса, опис, контакти (завжди видимо)
+    const peekZone = document.getElementById('bottom-sheet-peek-zone');
+    let peekHtml = `
+        <div class="bs-category-dot" style="background:${config.color}">${config.emoji} ${category}</div>
+        <div class="bs-title-preview">${record["Name"]}</div>
+        <p class="bs-address-preview">📍 ${record["Adresse"]}</p>
+    `;
+    if (description) peekHtml += `<p class="popup-desc">${description}</p>`;
+    peekHtml += `<div class="popup-contacts">`;
+    if (phone)   peekHtml += `<a href="tel:${phone}" class="popup-btn">📞 ${phone}</a>`;
+    if (email)   peekHtml += `<a href="mailto:${email}" class="popup-btn">✉️ ${email}</a>`;
+    if (website) peekHtml += `<a href="${website}" target="_blank" class="popup-btn popup-btn-web">🌐 Website</a>`;
+    peekHtml += `</div>`;
     if (record["Deutschklasse"] === true) {
-        html += `<div class="popup-badge">✅ Deutschklasse vorhanden</div>`;
+        peekHtml += `<div class="popup-badge">✅ Deutschklasse vorhanden</div>`;
+    }
+    peekZone.innerHTML = peekHtml;
+
+    // Пагінація
+    const pagination = document.getElementById('bottom-sheet-pagination');
+    if (total > 1) {
+        pagination.classList.remove('single');
+        document.getElementById('bs-prev').disabled = index === 0;
+        document.getElementById('bs-next').disabled = index === total - 1;
+        document.getElementById('bs-counter').textContent = `${index + 1} / ${total}`;
+    } else {
+        pagination.classList.add('single');
     }
 
+    // Контент — тільки години роботи (потребує свайпу до full)
+    let html = '';
+    if (hours) html += `<div class="popup-section"><strong>Öffnungszeiten</strong>${hours}</div>`;
     document.getElementById('bottom-sheet-body').innerHTML = html;
 }
 
-// ── Ініціалізація DOM bottom sheet ────────────────────────────────
+// ── Ініціалізація DOM ─────────────────────────────────────────────
 
 function initBottomSheet() {
     const sheet = document.createElement('div');
     sheet.id = 'bottom-sheet';
     sheet.innerHTML = `
         <div id="bottom-sheet-handle"></div>
-        <button id="bottom-sheet-close">✕</button>
         <div id="bottom-sheet-pagination">
             <button class="bs-nav" id="bs-prev">◀</button>
             <span class="bs-counter" id="bs-counter">1 / 1</span>
             <button class="bs-nav" id="bs-next">▶</button>
+            <button id="bottom-sheet-close">✕</button>
         </div>
+        <div id="bottom-sheet-peek-zone"></div>
         <div id="bottom-sheet-content">
             <div id="bottom-sheet-body" class="popup-content"></div>
         </div>
@@ -161,21 +292,16 @@ function initBottomSheet() {
     document.getElementById('bottom-sheet-close').addEventListener('click', closeBottomSheet);
 
     document.getElementById('bs-prev').addEventListener('click', () => {
-        if (bsState.index > 0) {
-            bsState.index--;
-            renderBottomSheet();
-        }
+        if (bsState.index > 0) { bsState.index--; renderBottomSheet(); }
+    });
+    document.getElementById('bs-next').addEventListener('click', () => {
+        if (bsState.index < bsState.entries.length - 1) { bsState.index++; renderBottomSheet(); }
     });
 
-    document.getElementById('bs-next').addEventListener('click', () => {
-        if (bsState.index < bsState.entries.length - 1) {
-            bsState.index++;
-            renderBottomSheet();
-        }
-    });
+    initSheetDrag(sheet);
 }
 
-// ── Перехоплюємо кліки на маркери на мобільному ───────────────────
+// ── Перехоплюємо кліки на маркери ────────────────────────────────
 
 function attachMobileMarkerClick(marker, allEntries) {
     marker.on('click', (e) => {
@@ -185,7 +311,7 @@ function attachMobileMarkerClick(marker, allEntries) {
 
         const activeEntries = getActiveEntries(allEntries);
         if (activeEntries.length > 0) {
-            openBottomSheet(activeEntries, marker.getLatLng());
+            openBottomSheet(activeEntries, marker);
         }
     });
 }
