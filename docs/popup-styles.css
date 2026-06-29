@@ -130,7 +130,6 @@
     font-weight: 600;
 }
 
-/* ===== ЛІЧИЛЬНИК ===== */
 
 .popup-counter-bar {
     text-align: center;
@@ -143,7 +142,6 @@
     letter-spacing: 0.5px;
 }
 
-/* ===== ЗОВНІШНІ СТРІЛКИ ===== */
 
 .popup-arrow {
     position: absolute;
@@ -186,7 +184,6 @@
     cursor: default;
 }
 
-/* Плавна пульсація */
 @keyframes arrowPulse {
     0%   { transform: scale(1);    box-shadow: 0 3px 16px rgba(0,0,0,0.28); }
     35%  { transform: scale(1.25); box-shadow: 0 6px 24px rgba(21,101,192,0.35); }

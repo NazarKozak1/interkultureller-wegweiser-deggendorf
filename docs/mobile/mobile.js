@@ -1,8 +1,4 @@
-// ── Мобільна адаптація ────────────────────────────────────────────
-
 const isMobile = () => window.innerWidth <= 768;
-
-// ── Пігулки фільтрів в хедері ─────────────────────────────────────
 
 const mobilePillLabels = {
     "Behörden":                     "🏛️ Behörden",
@@ -53,13 +49,6 @@ function buildMobilePills() {
     });
 }
 
-// ── Bottom Sheet snap points ──────────────────────────────────────
-// Sheet має фіксовану висоту 75dvh.
-// translateY у пікселях:
-//   full:      0              → весь sheet видно
-//   peek:      sheetH * 0.5   → видно нижні 50% sheet
-//   collapsed: sheetH - peekZoneH → видно тільки peek zone
-
 let currentSnap = 'peek';
 let bsState = { entries: [], index: 0 };
 
@@ -83,11 +72,9 @@ function snapTo(snapName, animate = true) {
     if (snapName === 'full') {
         translateY = 0;
     } else if (snapName === 'peek') {
-        // Показуємо peek zone повністю
         const peekH = getPeekZoneH();
         translateY = sheetH - peekH;
     } else {
-        // collapsed — видно тільки назву та адресу (перші два елементи peek zone)
         const handleEl  = document.getElementById('bottom-sheet-handle');
         const paginEl   = document.getElementById('bottom-sheet-pagination');
         const catEl     = document.querySelector('.bs-category-dot');
@@ -124,7 +111,6 @@ function openBottomSheet(activeEntries, marker) {
     sheet.style.transform = 'translateY(100%)';
     sheet.classList.add('open');
 
-    // Чекаємо один фрейм щоб sheet відрендерився і offsetHeight був правильний
     requestAnimationFrame(() => {
         requestAnimationFrame(() => {
             snapTo('peek', true);
@@ -141,8 +127,6 @@ function closeBottomSheet() {
     clearActiveMarker();
     map.closePopup();
 }
-
-// ── Touch drag ────────────────────────────────────────────────────
 
 function initSheetDrag(sheet) {
     const handle   = document.getElementById('bottom-sheet-handle');
@@ -220,8 +204,6 @@ function initSheetDrag(sheet) {
     });
 }
 
-// ── Рендер контенту ───────────────────────────────────────────────
-
 function renderBottomSheet() {
     const { entries, index } = bsState;
     const total = entries.length;
@@ -234,7 +216,6 @@ function renderBottomSheet() {
     const website = record["Website"];
     const hours   = formatHours(record);
 
-    // Peek zone — назва, адреса, опис, контакти (завжди видимо)
     const peekZone = document.getElementById('bottom-sheet-peek-zone');
     let peekHtml = `
         <div class="bs-category-dot" style="background:${config.color}">${config.emoji} ${category}</div>
@@ -252,7 +233,6 @@ function renderBottomSheet() {
     }
     peekZone.innerHTML = peekHtml;
 
-    // Пагінація
     const pagination = document.getElementById('bottom-sheet-pagination');
     if (total > 1) {
         pagination.classList.remove('single');
@@ -263,13 +243,10 @@ function renderBottomSheet() {
         pagination.classList.add('single');
     }
 
-    // Контент — тільки години роботи (потребує свайпу до full)
     let html = '';
     if (hours) html += `<div class="popup-section"><strong>Öffnungszeiten</strong>${hours}</div>`;
     document.getElementById('bottom-sheet-body').innerHTML = html;
 }
-
-// ── Ініціалізація DOM ─────────────────────────────────────────────
 
 function initBottomSheet() {
     const sheet = document.createElement('div');
@@ -301,8 +278,6 @@ function initBottomSheet() {
     initSheetDrag(sheet);
 }
 
-// ── Перехоплюємо кліки на маркери ────────────────────────────────
-
 function attachMobileMarkerClick(marker, allEntries) {
     marker.on('click', (e) => {
         if (!isMobile()) return;
@@ -316,8 +291,6 @@ function attachMobileMarkerClick(marker, allEntries) {
     });
 }
 
-// ── Запуск ────────────────────────────────────────────────────────
-
 initBottomSheet();
 buildMobilePills();
 
@@ -325,7 +298,6 @@ window.addEventListener('resize', () => {
     if (!isMobile()) closeBottomSheet();
 });
 
-// Зупиняємо touch events на пігулках щоб карта не рухалась
 const filterRow = document.getElementById('mobile-filter-row');
 if (filterRow) {
     L.DomEvent.disableScrollPropagation(filterRow);

@@ -1,5 +1,3 @@
-/* ===== МОБІЛЬНА АДАПТАЦІЯ (≤768px) ===== */
-
 @media (max-width: 768px) {
 
     header {
@@ -28,7 +26,6 @@
         font-weight: 800;
     }
 
-    /* Пігулки — над картою */
     #mobile-filter-row {
         position: absolute;
         top: 12px;
@@ -84,7 +81,6 @@
 
     #map { flex: 1; }
 
-    /* ── Bottom Sheet ── */
     #bottom-sheet {
         position: fixed;
         bottom: 0;
@@ -119,7 +115,6 @@
         border-radius: 2px;
     }
 
-    /* Peek zone — зовнішній padding задає відступ для всіх дочірніх елементів */
     #bottom-sheet-peek-zone {
         padding: 0 16px 12px;
         flex-shrink: 0;
@@ -127,7 +122,6 @@
         border-bottom: 1px solid #f0f0f0;
     }
 
-    /* Дочірні елементи peek zone — прибираємо власний padding по горизонталі */
     #bottom-sheet-peek-zone .popup-desc {
         margin: 0;
         padding: 8px 0 0;
@@ -226,7 +220,6 @@
         color: #888;
     }
 
-    /* Контент (години роботи) */
     #bottom-sheet-content {
         overflow-y: hidden;
         flex: 1;
@@ -240,7 +233,6 @@
     }
 }
 
-/* На десктопі ховаємо мобільні елементи */
 @media (min-width: 769px) {
     #mobile-filter-row { display: none; }
     #bottom-sheet      { display: none !important; }

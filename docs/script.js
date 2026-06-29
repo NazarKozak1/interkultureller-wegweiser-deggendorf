@@ -22,13 +22,11 @@ const categoryConfig = {
     "Vereine und Gemeinschaft": { color: "#16a085", emoji: "🌍" }
 };
 
-// ── Хелпер: активна категорія (одна, radio) ───────────────────────
 function getActiveCategory() {
     const radio = document.querySelector('.category-filter:checked');
     return radio ? radio.value : null;
 }
 
-// ── Хелпер: entries що відповідають активній категорії ────────────
 function getActiveEntries(entries) {
     const active = getActiveCategory();
     return entries.filter(({ category }) => category === active);
@@ -63,16 +61,12 @@ function darkenColor(hex, amount = 40) {
 function createActiveIcon(category) {
     const config = categoryConfig[category] || { color: '#555', emoji: '📍' };
     const dark = darkenColor(config.color, 30);
-    // Маркер без емодзі: темніший колір + біле кільце зовні + білий круг всередині
     const svg = `
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 40 50" width="48" height="58">
-            <!-- Зовнішнє біле кільце -->
             <path d="M16 0 C7.2 0 0 7.2 0 16 C0 26 16 42 16 42 C16 42 32 26 32 16 C32 7.2 24.8 0 16 0Z"
                   fill="white" stroke="white" stroke-width="4"/>
-            <!-- Основна форма маркера -->
             <path d="M16 0 C7.2 0 0 7.2 0 16 C0 26 16 42 16 42 C16 42 32 26 32 16 C32 7.2 24.8 0 16 0Z"
                   fill="${dark}" stroke="none"/>
-            <!-- Білий круг всередині -->
             <circle cx="16" cy="16" r="7" fill="white" opacity="0.9"/>
         </svg>
     `;
@@ -137,7 +131,6 @@ function buildCard(record, category, index, total) {
     return html;
 }
 
-// ── Зовнішні стрілки ──────────────────────────────────────────────
 const arrowLeft  = document.createElement('button');
 const arrowRight = document.createElement('button');
 arrowLeft.className  = 'popup-arrow popup-arrow-left';
@@ -152,7 +145,7 @@ L.DomEvent.disableClickPropagation(arrowRight);
 
 let currentState = null;
 let activeMarker = null;
-let activeMarkerCategory = null; // зберігаємо категорію окремо
+let activeMarkerCategory = null;
 
 function setActiveMarker(marker, category) {
     if (activeMarker && activeMarker !== marker) {
@@ -242,7 +235,6 @@ map.on('popupclose', () => {
 
 map.on('move', updateArrows);
 
-// ── Список установ ────────────────────────────────────────────────
 const locationListEl    = document.getElementById('location-list');
 const locationListInner = document.getElementById('location-list-inner');
 
@@ -326,7 +318,6 @@ function renderLocationList(category, allData) {
     locationListEl.classList.add('visible');
 }
 
-// ── Дані ──────────────────────────────────────────────────────────
 const popupState        = {};
 const markersByCategory = {};
 let   allDataGlobal     = null;
@@ -359,7 +350,6 @@ fetch('data/processed.json')
             attachMobileMarkerClick(marker, entries);
 
             marker.on('popupopen', () => {
-                // На мобільному popup'и не використовуємо — bottom sheet робить все сам
                 if (isMobile()) return;
 
                 const state         = popupState[key];
@@ -422,12 +412,10 @@ fetch('data/processed.json')
     })
     .catch(err => console.error("Fehler beim Laden der Daten:", err));
 
-// ── Radio-фільтрація ──────────────────────────────────────────────
 document.querySelectorAll('.category-filter').forEach(radio => {
     radio.addEventListener('change', () => {
         const activeCategory = getActiveCategory();
 
-        // Завжди закриваємо попап і скидаємо активний маркер
         map.closePopup();
         clearActiveMarker();
         currentState = null;
@@ -457,7 +445,6 @@ window.addEventListener('resize', () => {
     }
 });
 
-// ── Колір активної кнопки категорії ──────────────────────────────
 function updateActiveFilterColor() {
     document.querySelectorAll('.category-filter').forEach(radio => {
         const tag   = radio.nextElementSibling;
