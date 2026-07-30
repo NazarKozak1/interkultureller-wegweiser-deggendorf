@@ -61,8 +61,8 @@
       "Donnerstag": "08:00-12:00",
       "Freitag": "08:00-12:00",
       "Stand": "16.06.2026",
-      "lat": 48.8371089,
-      "lon": 12.9593864
+      "lat": 48.8371058,
+      "lon": 12.9592967
     },
     {
       "Name": "Sozialamt Deggendorf",
@@ -177,8 +177,8 @@
       "E-Mail-Adresse": "info@th-deg.de",
       "Website": "https://www.th-deg.de/",
       "Stand": "20.06.2026",
-      "lat": 48.8295544,
-      "lon": 12.954735
+      "lat": 48.8292347,
+      "lon": 12.9562564
     }
   ],
   "Integrationskurse Deggendorf": [
