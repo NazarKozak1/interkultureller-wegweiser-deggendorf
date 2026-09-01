@@ -199,8 +199,8 @@
       "E-Mail-Adresse": "info@isa-bildung.de",
       "Website": "http://isa-bildung.de/",
       "Stand": "20.06.2026",
-      "lat": 48.8391497,
-      "lon": 12.9600677
+      "lat": 48.8391696,
+      "lon": 12.9602714
     },
     {
       "Name": "IFP Schulungszentrum",
@@ -256,6 +256,41 @@
       "Stand": "21.06.2026",
       "lat": 48.8456305,
       "lon": 12.9719992
+    }
+  ],
+  "Soziales": [
+    {
+      "Name": "Caritas-Zentrum",
+      "Adresse": "Pferdemarkt 20",
+      "Telefonnummer": "0991 38970",
+      "E-Mail-Adresse": null,
+      "Beshreibung": "Hier können Sie als Migrant:in konkrete Sozialberatung, Hilfe bei der Pflege von Angehörigen sowie Unterstützung im Alltag erhalten.",
+      "Website": "https://www.caritas-deggendorf.de/",
+      "Stand": "21.06.2026",
+      "lat": 48.8297006,
+      "lon": 12.9630332
+    },
+    {
+      "Name": "AnKER-Einrichtung Deggendorf",
+      "Adresse": "Stadtfeldstraße 11",
+      "Telefonnummer": "0911 94384904",
+      "E-Mail-Adresse": null,
+      "Beshreibung": "Hier können Sie als Migrant:in erste Unterstützung bei der Registrierung, dem Asylverfahren sowie der Erstversorgung erhalten.",
+      "Website": "https://www.bamf.de/SharedDocs/Struktur/Organisationseinheiten/DE/Standorte/deggendorf-anker-einheit.html?nn=281840",
+      "Stand": "21.06.2026",
+      "lat": 48.8402808,
+      "lon": 12.9511288
+    },
+    {
+      "Name": "Deggendorfer Tafel",
+      "Adresse": "Bahnhofstraße 70, 94469 Deggendorf",
+      "Telefonnummer": "0991 2960116",
+      "E-Mail-Adresse": "christiane.preiss@deggendorf.de",
+      "Beshreibung": "Hier können Sie als Migrant:in mit geringem Einkommen günstige Lebensmittel erhalten sowie wichtige Informationen zur Anmeldung finden.",
+      "Website": "https://www.deggendorf.de/rathaus/hauptverwaltung/hauptamt/buergerarbeit/deggendorfer-tafel",
+      "Stand": "21.06.2026",
+      "lat": 48.8368632,
+      "lon": 12.9537161
     }
   ],
   "Vereine und Gemeinschaft": [
